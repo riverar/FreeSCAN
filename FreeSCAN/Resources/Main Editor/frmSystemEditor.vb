@@ -3153,7 +3153,7 @@ abort:
         DispStat("Please wait, attempting to connect to scannow.org")
         Dim strVer, strMsg As String
         Dim bWarn As Boolean = blnNoWarn
-        strVer = SendNetCMD("http://scannow.org/version.txt")
+        strVer = SendNetCMD("http://free-scan.net/assets/version.json")
         DispStat("")
         Dim ShellCode As String
         If strVer = "ERROR" Then
@@ -3169,7 +3169,7 @@ abort:
                 ShellCode = CStr(ShellExecute(Me.Handle.ToInt32, "open", strMsg, "", "", 2))
             End If
         ElseIf Val(strVer) = BuildNum Then
-            DispStat("You are using the most current version of FreeSCAN")
+            DispStat("You are using the most current version of FreeSCAN.")
         End If
 
         blnNoWarn = False
