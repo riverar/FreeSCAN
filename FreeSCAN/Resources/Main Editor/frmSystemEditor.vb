@@ -3129,14 +3129,14 @@ abort:
     Public Sub mnuAbout_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles mnuAbout.Click
         Dim strMsg As String
         strMsg = strProgTitle & " "
-        strMsg = strMsg & "Written by Assaf Shool" & vbNewLine
-        strMsg = strMsg & "This program is Freeware. If you enjoy using this program, please consider a donation to"
-        strMsg = strMsg & " help with development efforts." & vbNewLine
+        strMsg = strMsg & "Written by Assaf Shool, maintained by Matt Callahan." & vbNewLine
+        'strMsg = strMsg & "This program is Freeware. If you enjoy using this program, please consider a donation to"
+        'strMsg = strMsg & " help with development efforts." & vbNewLine
 
         strMsg = strMsg & "This version supports the " & supportedscanners & " scanners." & vbNewLine
-        strMsg = strMsg & "Thanks goes out to all of you who donated your time and through PayPal, with which without your help this program would not have been possible." & vbNewLine
-        strMsg = strMsg & "Use at your own risk. (This program contains proprietery Uniden control codes.)" & vbNewLine
-        strMsg = strMsg & "See http://www.sixspotsoftware.com for updates and information."
+        'strMsg = strMsg & "Thanks goes out to all of you who donated your time and through PayPal, with which without your help this program would not have been possible." & vbNewLine
+        'strMsg = strMsg & "Use at your own risk. (This program contains proprietery Uniden control codes.)" & vbNewLine
+        strMsg = strMsg & "See http://www.free-scan.net for updates and information."
         frmAbout.Text1.Text = strMsg
         frmAbout.Visible = True
 
@@ -3157,10 +3157,10 @@ abort:
         DispStat("")
         Dim ShellCode As String
         If strVer = "ERROR" Then
-            If bWarn = False Then strVer = CStr(MsgBox("FreeSCAN was unable to connect to scannow.org. Check your connection.", MsgBoxStyle.OkOnly + MsgBoxStyle.Critical))
-        ElseIf Val(strVer) = BuildNum And Me.Visible = True And Not bWarn Then
+            If bWarn = False Then strVer = CStr(MsgBox("FreeSCAN was unable to connect to free-scan.net.", MsgBoxStyle.OkOnly + MsgBoxStyle.Critical))
+        ElseIf Val(strVer) = CurrentAssemblyVer And Me.Visible = True And Not bWarn Then
             strVer = CStr(MsgBox("You are using the most current version of FreeSCAN.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information))
-        ElseIf Val(strVer) > BuildNum Then 'get a good path, if not then open the website
+        ElseIf Val(strVer) > CurrentAssemblyVer Then 'get a good path, if not then open the website
             'a direct download path is available
             strVer = CStr(MsgBox("A newer version of FreeSCAN is available. Would you like to download it now?", MsgBoxStyle.YesNo + MsgBoxStyle.Question))
 
@@ -3168,7 +3168,7 @@ abort:
                 strMsg = SendNetCMD("http://scannow.org/goupdate.txt")
                 ShellCode = CStr(ShellExecute(Me.Handle.ToInt32, "open", strMsg, "", "", 2))
             End If
-        ElseIf Val(strVer) = BuildNum Then
+        ElseIf Val(strVer) = CurrentAssemblyVer Then
             DispStat("You are using the most current version of FreeSCAN.")
         End If
 

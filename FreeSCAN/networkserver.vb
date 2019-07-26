@@ -676,7 +676,7 @@ Public Class networkserver
 
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
         Dim ShellCode, strSite As String
-        strSite = "https://www.sixspotsoftware.com"
+        strSite = "https://www.free-scan.net"
 
         ShellCode = CStr(ShellExecute(Me.Handle.ToInt32, "open", strSite, "", "", 1))
 

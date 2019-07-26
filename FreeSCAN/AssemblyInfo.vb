@@ -12,9 +12,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("sixspotsoftware.com")> 
-<Assembly: AssemblyProduct("FreeSCAN")> 
-<Assembly: AssemblyCopyright("2009")> 
+<Assembly: AssemblyCompany("free-scan.net")>
+<Assembly: AssemblyProduct("FreeSCAN")>
+<Assembly: AssemblyCopyright("2019")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 
