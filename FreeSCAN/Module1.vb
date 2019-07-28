@@ -1,8 +1,11 @@
 Option Strict Off
 Option Explicit On
 Imports System
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Net
+Imports System.Web.Script.Serialization
+
 Module Module1
     Public lngChanSys, lngChanGroup As Integer
     Public Const SWP_NOMOVE As Short = 2
@@ -30,7 +33,7 @@ Module Module1
     Public Const MaxChanSetting As Integer = 30  'Do not change!
     Public Const strProgTitle As String = "FreeSCAN 2.19-beta1"
     Public Const MaxRadioSetting As Integer = 200 'Do not change!
-    Public Const BuildNum As Integer = 1052 'set for version 2/19 beta1
+    Public CurrentAssemblyVer As New Version(My.Application.Info.Version.ToString) 'Set in AssemblyInfo.vb
     Public Const NumPrefs As Integer = 3
     Public Const APCOMode As String = "AUTO"
     Public Const APCOThreshold As String = "8"
@@ -449,7 +452,7 @@ Module Module1
                 MakeItKosherQK = strValue
         End Select
     End Function
-   
+
     Function FlipIt(ByRef intBit As String) As Integer
 
         'inverts digit
@@ -665,7 +668,7 @@ Module Module1
         Dim intCnt As Integer
         intCnt = 1
         Do Until intCnt = 0
-            intCnt = instr(strFile, "\")
+            intCnt = InStr(strFile, "\")
             If intCnt <> 0 Then
                 strFile = Right(strFile, Len(strFile) - intCnt)
             End If
@@ -2022,7 +2025,7 @@ Module Module1
             frmCommsDownload.WriteStats()
         End If
         If Len(strbuffer) > 4 Then
-            strbuffer = Microsoft.VisualBasic.Right(strbuffer, Len(strbuffer) - MakePositive(instr(strbuffer, ","))) 'remove first command response
+            strbuffer = Microsoft.VisualBasic.Right(strbuffer, Len(strbuffer) - MakePositive(InStr(strbuffer, ","))) 'remove first command response
             strbuffer = Replace(strbuffer, Chr(13), Nothing) 'remove CR
         End If
         SendCMD = strbuffer
@@ -2037,24 +2040,27 @@ errhandler:
         strLog &= "Error " & Err.Number
     End Function
 
-    Function SendNetCMD(ByRef strCMD As String) As String
-        'retrieves a document from the INTERNET
-
-        ' Get HTML data
+    Function SendNetCMD(ByRef url As String) As String
         Dim client As WebClient = New WebClient()
+        Dim jss As New JavaScriptSerializer()
 
-
-        Dim strResult As String = Nothing
         Try
-            Dim data As Stream = client.OpenRead(strCMD)
-            Dim reader As StreamReader = New StreamReader(data)
-            strResult = reader.ReadLine()
+            Dim stream As Stream = client.OpenRead(url)
+            Dim reader As StreamReader = New StreamReader(stream)
+            Dim jsonResponse = reader.ReadToEnd()
+            Dim dict As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(jsonResponse)
+            Dim currentVer As String = dict("currentVerion")
 
-        Catch
+            Return currentVer
+
+            'Dim result As String = client.DownloadString(url)
+            'Dim dict As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(result)
+
+            Return dict("currentVerion")
+        Catch ex As Exception
             'didnt work
-            strResult = "ERROR"
+            Return "ERROR"
         End Try
-        SendNetCMD = strResult
     End Function
     Function RemoteMode() As Boolean
         'nags user and returns true if the program

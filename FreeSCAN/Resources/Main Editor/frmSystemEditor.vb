@@ -3153,22 +3153,21 @@ abort:
         DispStat("Please wait, attempting to connect to scannow.org")
         Dim strVer, strMsg As String
         Dim bWarn As Boolean = blnNoWarn
-        strVer = SendNetCMD("http://free-scan.net/assets/version.json")
+        strVer = SendNetCMD("https://raw.githubusercontent.com/mfcallahan/FreeSCAN-homepage/gh-pages/assets/version.json")
         DispStat("")
         Dim ShellCode As String
         If strVer = "ERROR" Then
             If bWarn = False Then strVer = CStr(MsgBox("FreeSCAN was unable to connect to free-scan.net.", MsgBoxStyle.OkOnly + MsgBoxStyle.Critical))
-        ElseIf Val(strVer) = CurrentAssemblyVer And Me.Visible = True And Not bWarn Then
+        ElseIf Version.Parse(strVer) = CurrentAssemblyVer And Me.Visible = True And Not bWarn Then
             strVer = CStr(MsgBox("You are using the most current version of FreeSCAN.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information))
-        ElseIf Val(strVer) > CurrentAssemblyVer Then 'get a good path, if not then open the website
-            'a direct download path is available
+        ElseIf Version.Parse(strVer) > CurrentAssemblyVer Then
             strVer = CStr(MsgBox("A newer version of FreeSCAN is available. Would you like to download it now?", MsgBoxStyle.YesNo + MsgBoxStyle.Question))
 
             If strVer = "6" Then 'yes, i think?
                 strMsg = SendNetCMD("http://scannow.org/goupdate.txt")
-                ShellCode = CStr(ShellExecute(Me.Handle.ToInt32, "open", strMsg, "", "", 2))
+                ShellCode = CStr(ShellExecute(Me.Handle.ToInt32, "opengoo", strMsg, "", "", 2))
             End If
-        ElseIf Val(strVer) = CurrentAssemblyVer Then
+        ElseIf Version.Parse(strVer) = CurrentAssemblyVer Then
             DispStat("You are using the most current version of FreeSCAN.")
         End If
 
