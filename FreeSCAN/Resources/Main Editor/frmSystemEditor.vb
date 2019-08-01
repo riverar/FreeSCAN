@@ -3149,6 +3149,12 @@ abort:
         Call CheckForUpdate()
     End Sub
     Sub CheckForUpdate()
+        Dim isBeta As String = System.Configuration.ConfigurationManager.AppSettings("isBeta")
+        If Convert.ToBoolean(isBeta) Then
+            MsgBox("You are using a beta version of FreeSCAN. Please check free-scan.net to see if an update is avialable.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information)
+            Return
+        End If
+
         'check the internet to see if there is an update available
         DispStat("Please wait, attempting to connect to scannow.org")
         Dim strVer, strMsg As String
