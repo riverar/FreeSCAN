@@ -128,9 +128,6 @@
     </Compile>
     <Compile Include="AssemblyInfo.vb" />
     <Compile Include="Audio.vb" />
-    <Compile Include="Declarations.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Resources\Virtual Control\Form2.Designer.vb">
       <DependentUpon>Form2.vb</DependentUpon>
     </Compile>
