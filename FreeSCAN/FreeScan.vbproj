@@ -632,9 +632,6 @@
     <None Include="Resources\My Documents1.png" />
     <None Include="Resources\My Documents.png" />
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
     <BaseApplicationManifest Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <CustomToolNamespace>My</CustomToolNamespace>
